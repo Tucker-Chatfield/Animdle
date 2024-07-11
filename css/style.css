@@ -64,3 +64,79 @@ h1 {
   font-size: 25px;
   color: black;
 }
+
+#keyboard {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  margin: auto;
+  gap: .5vmin;
+}
+
+#keyboard div {
+  display: flex;
+}
+
+.key-row1 {
+  margin: 0.5vmin;
+}
+
+.key-row2 {
+  margin: 0.5vmin;
+}
+
+.key-row3 {
+  margin: 0.5vmin;
+}
+
+button, #enter-key, #delete-key {
+  font-size: 20px;
+  font-weight: 100;
+  margin: 0 0.5vmin;
+  padding: 1vmin;
+  border: solid 2px transparent;
+  color: white;
+  background-color: rgb(117, 148, 160);
+  padding-block: 1px;
+  padding-inline: 6px;
+  border-radius: 4px;
+  height: 58px;
+  width: 40px;
+}
+
+#enter-key, #delete-key {
+  width: 65px;
+  font-size: 15px;
+}
+
+button:hover, #enter-key:hover, #delete-key:hover {
+  cursor: pointer;
+  background-color: rgb(146, 50, 18);
+}
+
+#reset-btn {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  transform: translate(0px, -155px);
+  font-size: 20px;
+  font-weight: 100;
+  font-family: Arial, Helvetica, sans-serif;
+  color: rgb(240, 78, 37);
+  background-color: rgb(66, 68, 33);
+  border-radius: 20%;
+  padding: 1vmin;
+  border: solid 2px transparent;
+  width: 100px;
+  visibility: visible;
+}
+
+#reset-btn-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 20px;
+}

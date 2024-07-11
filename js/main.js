@@ -10,21 +10,21 @@ let nextSquare;
 let guessedAnimal;
 let guessedCount;
 /*------------------------ Cached Element References ------------------------*/
-const messageEl = document.querySelector();
-const resetBtn = document.getElementById();
-const board = document.querySelectorAll();
+// const messageEl = document.querySelector();
+// const resetBtn = document.getElementById();
+// const board = document.querySelectorAll();
 
 /*----------------------------- Event Listeners -----------------------------*/
 
 /*-------------------------------- Functions --------------------------------*/
 
 function init() {
-  secretAnimal = animals[Math.floor(Math.random() * Animals.length)].toUpperCase();
+  secretAnimal = animals[Math.floor(Math.random() * animals.length)].toUpperCase();
   console.log(secretAnimal);
   winner = 0;
   loser = 0;
   guessedAnimal = [[]];
-  turn =1;
+  turn = 1;
   nextSquare = 1;
   guessedCount = 0;
   render();
@@ -33,6 +33,7 @@ function init() {
 
 function render() {
   renderMessage();
+  renderKeyboard();
 }
 
 function renderBoard() {
