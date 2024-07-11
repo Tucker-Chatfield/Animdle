@@ -9,3 +9,58 @@ body, html {
   font-family: Arial, Helvetica, sans-serif;
   background: rgb(242, 228, 204);
 }
+
+h1 {
+  background-color: rgb(84, 88, 45);
+  width: 100%;
+  padding: 6px 0;
+  margin: 0;
+  text-align: center;
+  box-sizing: border-box;
+}
+
+#container {
+  display: flex;
+  height: 100vh;
+  width: 100%;
+  flex-direction: column;
+  align-items: center;
+  padding: 3vmin;
+  width: 100%;
+  height: calc(100vh - 95px);
+}
+
+.title {
+  color: white;
+  font-size: 7vmin;
+  text-align: center;
+  margin: 0;
+}
+
+.message {
+  color: rgb(240, 78, 37);
+  font-family: 'Franklin Gothic Medium', 'Arial Narrow', Arial, sans-serif;
+  font-size: 3vmin;
+  margin: 0;
+  text-align: center;
+  visibility: hidden;
+}
+
+#board {
+  display: grid;
+  grid-template-columns: repeat(5, 9vmin);
+  grid-template-rows: repeat(6, 9vmin);
+  gap: 1vmin;
+  margin-top: 0;
+  margin-bottom: 0;
+  justify-content: center;
+}
+
+#board > div {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border: 0.1vmin solid gray;
+  font-size: 25px;
+  color: black;
+}
