@@ -35,7 +35,7 @@ function init() {
 }
   
 function render() {
-  //renderMessage();
+  renderMessage();
   renderKeyboard();
 }
   
@@ -53,32 +53,65 @@ function renderBoard() {
 }
   
 function renderKeyboard() {
-  letters.forEach((letter) => {
-    letter.onclick = ({ target }) => {
+  letters.forEach((letterEl) => {
+    letterEl.onclick = ({ target }) => {
       const letter = target.getAttribute('id');
       
-      updateGuessedWords(letter);
-      
-      // if(key === 'ENTER') {
-      //   handleSubmitGuess();
-      //   turn += 1;
-      //   return;
-      // } else if(key === 'DEL') {
-      //   handleDelete();
-      //   return;
-      // }
+      if(letter === 'enter-key') {
+        handleSubmitWord();
+        turn += 1;
+        return;
+      } else if(letter === 'delete-key') {
+        handleDelete();
+        return;
+      } else {
+        updateGuessedWords(letter);
+      }
     }
-  })
+  });
 }
 
-function getCurrentWordArr() {
-  const numberOfGuessedWords = guessedAnimal.length
-  return guessedAnimal[numberOfGuessedWords - 1];
+function handleSubmitWord() {
+  const currentWord = getCurrentWordArr().join('');
+
+  if (currentWord.length !== 5) {
+    return;
+  } else if (currentWord === secretAnimal) {
+    winner = 1;
+  }
+
+  if (guessedAnimal.length === 6) {
+    loser = 1;
+  }
+
+  guessedAnimal.push([]);
+
+  let row = document.querySelectorAll('.row' + turn);
+
+  row.forEach((letter, i) => {
+    letter.classList.add('locked')
+  })
+
+  render();
+}
+
+function handleDelete() {
+  const lastletterEl = document.getElementById((nextSquare - 1));
+
+  if (!lastletterEl.classList.contains('locked')) {
+    let currentWordArr = getCurrentWordArr()
+    const deletedLetter = currentWordArr.pop();
+
+    currentWordArr = guessedAnimal[guessedAnimal.length - 1]
+
+    lastletterEl.textContent = '';
+    nextSquare = nextSquare - 1;
+  }
 }
 
 function updateGuessedWords(letter) {
   const currentWordArr = getCurrentWordArr()
-
+  
   if (currentWordArr && currentWordArr.length < 5) {
     currentWordArr.push(letter);
     
@@ -88,5 +121,26 @@ function updateGuessedWords(letter) {
       nextSquareEl.textContent = letter;
       nextSquare = nextSquare + 1;
     }
+  }
+}
+
+function getCurrentWordArr() {
+  const numberOfGuessedWords = guessedAnimal.length
+  return guessedAnimal[numberOfGuessedWords - 1];
+}
+
+function renderMessage() {
+  if (winner === 1) {
+    setTimeout(() => {
+      messageEl.style.visibility = 'visible';
+      messageEl.innerText = 'You got it!';
+      resetBtn.style.visibility = 'visible';
+    }, 800)
+  } else if (loser === 1) {
+    setTimeout(() => {
+      messageEl.style.visibility = 'visible';
+      messageEl.innerText = `Nice try! The word was ${secretAnimal}`;
+      resetBtn.style.visibility = 'visible';
+    }, 800)
   }
 }
