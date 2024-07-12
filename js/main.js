@@ -30,6 +30,7 @@ function init() {
   turn = 1;
   nextSquare = 1;
   guessedCount = 0;
+  resetBtn.style.visibility = 'hidden'
   render();
   renderBoard();
 }
@@ -88,7 +89,7 @@ function handleSubmitWord() {
 
   let row = document.querySelectorAll('.row' + turn);
 
-  row.forEach((letter, i) => {
+  row.forEach((letter) => {
     letter.classList.add('locked')
   })
 
@@ -98,11 +99,9 @@ function handleSubmitWord() {
 function handleDelete() {
   const lastletterEl = document.getElementById((nextSquare - 1));
 
-  if (!lastletterEl.classList.contains('locked')) {
+  if (lastletterEl && !lastletterEl.classList.contains('locked')) {
     let currentWordArr = getCurrentWordArr()
-    const deletedLetter = currentWordArr.pop();
-
-    currentWordArr = guessedAnimal[guessedAnimal.length - 1]
+    currentWordArr.pop();
 
     lastletterEl.textContent = '';
     nextSquare = nextSquare - 1;
