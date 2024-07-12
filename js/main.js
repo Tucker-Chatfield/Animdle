@@ -1,6 +1,5 @@
 /*-------------------------------- Constants --------------------------------*/
 import {animals} from "./animals.js"
-
 /*---------------------------- Variables (state) ----------------------------*/
 let secretAnimal;
 let winner;
@@ -53,11 +52,13 @@ function renderBoard() {
   messageEl.style.visibility = 'hidden';
 }
   
-function renderKeyboard() { //logic in this function referenced: https://www.youtube.com/watch?v=j7OhcuZQ-q8
+function renderKeyboard() {
   letters.forEach((letter) => {
     letter.onclick = ({ target }) => {
-      const key = target.getAttribute('id');
-      console.log(key);  
+      const letter = target.getAttribute('id');
+      
+      updateGuessedWords(letter);
+      
       // if(key === 'ENTER') {
       //   handleSubmitGuess();
       //   turn += 1;
@@ -68,4 +69,24 @@ function renderKeyboard() { //logic in this function referenced: https://www.you
       // }
     }
   })
+}
+
+function getCurrentWordArr() {
+  const numberOfGuessedWords = guessedAnimal.length
+  return guessedAnimal[numberOfGuessedWords - 1];
+}
+
+function updateGuessedWords(letter) {
+  const currentWordArr = getCurrentWordArr()
+
+  if (currentWordArr && currentWordArr.length < 5) {
+    currentWordArr.push(letter);
+    
+    const nextSquareEl = document.getElementById(nextSquare);
+    
+    if(nextSquareEl) { 
+      nextSquareEl.textContent = letter;
+      nextSquare = nextSquare + 1;
+    }
+  }
 }
