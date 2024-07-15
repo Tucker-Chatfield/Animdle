@@ -78,77 +78,79 @@ function renderKeyboard() {
 // Handles the submission, checks for valid word, checks word length, if correct winner, if wrong next row, pushes word into row, and moves to next row.
 function handleSubmitWord() {
   const currentWord = getCurrentWordArr().join('');
-
+  
   if (!animals.includes(currentWord.toLowerCase())) {
     handleInvalidWord();
     return;
   }
-
+  
   guessedAnimal.push([]);
-
+  
   guessCheck(currentWord);
-
+  
   if (currentWord.length !== 5) {
     return;
   } else if (currentWord === secretAnimal) {
     winner = 1;
   }
-
+  
   if (guessedAnimal.length === 6 && !winner) {
     loser = 1;
   }
-
-
+  
+  
   let row = document.querySelectorAll('.row' + turn);
-
+  
   row.forEach((letter) => {
     letter.classList.add('locked')
   })
-
+  
   render();
+}
+
+// message for when a word isn't a valid animal name.
+function handleInvalidWord() {
+  messageEl.style.visibility = 'visible';
+  messageEl.innerText = 'Invalid word, enter animal name';
+  
+  setTimeout(() => {
+    messageEl.style.visibility = 'hidden';
+  }, 3500);
 }
 
 // delete key function
 function handleDelete() {
-  const lastletterEl = document.getElementById((nextSquare - 1));
-
+  if (nextSquare <= 1) return;
+  
+  const lastletterEl = document.getElementById(nextSquare - 1);
+  
   if (lastletterEl && !lastletterEl.classList.contains('locked')) {
     let currentWordArr = getCurrentWordArr()
     currentWordArr.pop();
 
     lastletterEl.textContent = '';
+
     nextSquare -= 1;
   }
 }
 
-// Adds letter to square, and moves to next square.
-function updateGuessedWords(letter) {
-  const currentWordArr = getCurrentWordArr()
-  
-  if (currentWordArr && currentWordArr.length < 5) {
-    currentWordArr.push(letter);
-    
-    const nextSquareEl = document.getElementById(nextSquare);
-    
-    if(nextSquareEl) { 
-      nextSquareEl.textContent = letter;
-      nextSquare = nextSquare + 1;
-    }
-  }
-}
-
-// referenced YouTube video for logic: https://www.youtube.com/watch?v=oKM2nQdQkIU
+// logic for highlighting letters. referenced YouTube video for logic: https://www.youtube.com/watch?v=oKM2nQdQkIU
 function guessCheck(guess) {
-  const row = turn
+  const row = turn - 1;
   const animation_duration = 500;
-
+  
   for (let i = 0; i < 5; i++) {
     const box = document.getElementById(`box${row}${i}`);
+    if (!box) {
+      console.error(`Box element not found: box${row}${i}`);
+      continue;
+    }
+  
     const letter = box.textContent;
     const numOfOccurrencesSecret = getNumOfOccurencesInWord(secretAnimal, letter);
     const numOfOccurrencesGuess = getNumOfOccurencesInWord(guess, letter);
     const letterPosition = getPositionOfOccurence(guess, letter, i);
-
+    
     setTimeout(() => {
       if (
         numOfOccurrencesGuess > numOfOccurrencesSecret && letterPosition > numOfOccurrencesSecret
@@ -164,7 +166,7 @@ function guessCheck(guess) {
         }
       }
     }, ((i + 1) * animation_duration) / 2);
-
+    
     box.classList.add('animated');
     box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
   }
@@ -185,21 +187,31 @@ function getPositionOfOccurence(word, letter, occurrence) {
   return position;
 }
 
+
+// Adds letter to square, and moves to next square.
+function updateGuessedWords(letter) {
+  const currentWordArr = getCurrentWordArr()
+  
+  if (currentWordArr && currentWordArr.length < 5) {
+    currentWordArr.push(letter);
+    
+    const nextSquareEl = document.getElementById(nextSquare);
+    
+    if(nextSquareEl) { 
+      nextSquareEl.textContent = letter;
+      nextSquare = nextSquare + 1;
+    }
+  }
+}
+
+
+
 // Determines how many words have been guessed so far, and puts them into a new array just for guessed words.
 function getCurrentWordArr() {
   const numberOfGuessedWords = guessedAnimal.length
   return guessedAnimal[numberOfGuessedWords - 1] || [];
 }
 
-// message for when a word isn't a valid animal name.
-function handleInvalidWord() {
-  messageEl.style.visibility = 'visible';
-  messageEl.innerText = 'Invalid word, enter animal name';
-
-  setTimeout(() => {
-    messageEl.style.visibility = 'hidden';
-  }, 3500);
-}
 
 // sends the winner/loser message when appropriate
 function renderMessage() {
