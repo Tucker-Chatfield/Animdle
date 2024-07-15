@@ -20,6 +20,7 @@ export const animals = [
   'frogs',
   'gecko',
   'goose',
+  'goats',
   'hares',
   'heron',
   'hippo',

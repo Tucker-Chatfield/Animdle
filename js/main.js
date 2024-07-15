@@ -19,8 +19,7 @@ resetBtn.addEventListener('click', init);
 
 /*-------------------------------- Functions --------------------------------*/
 
-init();
-
+// initializes the game
 function init() {
   secretAnimal = animals[Math.floor(Math.random() * animals.length)].toUpperCase();
   console.log(secretAnimal);
@@ -34,12 +33,15 @@ function init() {
   render();
   renderBoard();
 }
-  
+
+// renders the game state
 function render() {
   renderMessage();
   renderKeyboard();
 }
-  
+
+
+// loads the tiles for the board in, and secures the winner/loser message hidden when it shouldn't be there.
 function renderBoard() {
   board.forEach((div) => {
     div.style.backgroundColor = '';
@@ -52,7 +54,8 @@ function renderBoard() {
     
   messageEl.style.visibility = 'hidden';
 }
-  
+
+// loads the keyboard in, has added functions for enter key and delete key.
 function renderKeyboard() {
   letters.forEach((letterEl) => {
     letterEl.onclick = ({ target }) => {
@@ -72,8 +75,18 @@ function renderKeyboard() {
   });
 }
 
+// Handles the submission, checks for valid word, checks word length, if correct winner, if wrong next row, pushes word into row, and moves to next row.
 function handleSubmitWord() {
   const currentWord = getCurrentWordArr().join('');
+
+  if (!animals.includes(currentWord.toLowerCase())) {
+    handleInvalidWord();
+    return;
+  }
+
+  guessedAnimal.push([]);
+
+  guessCheck(currentWord);
 
   if (currentWord.length !== 5) {
     return;
@@ -81,11 +94,10 @@ function handleSubmitWord() {
     winner = 1;
   }
 
-  if (guessedAnimal.length === 6) {
+  if (guessedAnimal.length === 6 && !winner) {
     loser = 1;
   }
 
-  guessedAnimal.push([]);
 
   let row = document.querySelectorAll('.row' + turn);
 
@@ -96,6 +108,7 @@ function handleSubmitWord() {
   render();
 }
 
+// delete key function
 function handleDelete() {
   const lastletterEl = document.getElementById((nextSquare - 1));
 
@@ -104,10 +117,11 @@ function handleDelete() {
     currentWordArr.pop();
 
     lastletterEl.textContent = '';
-    nextSquare = nextSquare - 1;
+    nextSquare -= 1;
   }
 }
 
+// Adds letter to square, and moves to next square.
 function updateGuessedWords(letter) {
   const currentWordArr = getCurrentWordArr()
   
@@ -123,11 +137,71 @@ function updateGuessedWords(letter) {
   }
 }
 
-function getCurrentWordArr() {
-  const numberOfGuessedWords = guessedAnimal.length
-  return guessedAnimal[numberOfGuessedWords - 1];
+// referenced YouTube video for logic: https://www.youtube.com/watch?v=oKM2nQdQkIU
+function guessCheck(guess) {
+  const row = turn
+  const animation_duration = 500;
+
+  for (let i = 0; i < 5; i++) {
+    const box = document.getElementById(`box${row}${i}`);
+    const letter = box.textContent;
+    const numOfOccurrencesSecret = getNumOfOccurencesInWord(secretAnimal, letter);
+    const numOfOccurrencesGuess = getNumOfOccurencesInWord(guess, letter);
+    const letterPosition = getPositionOfOccurence(guess, letter, i);
+
+    setTimeout(() => {
+      if (
+        numOfOccurrencesGuess > numOfOccurrencesSecret && letterPosition > numOfOccurrencesSecret
+      ) {
+        box.classList.add('empty');
+      } else {
+        if (letter === secretAnimal[i]) {
+          box.classList.add('right');
+        } else if (secretAnimal.includes(letter)) {
+          box.classList.add('wrong');
+        } else {
+          box.classList.add('empty');
+        }
+      }
+    }, ((i + 1) * animation_duration) / 2);
+
+    box.classList.add('animated');
+    box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
+  }
 }
 
+// Helper to get the number of occurrences of a letter in a word
+function getNumOfOccurencesInWord(word, letter) {
+  return word.split(letter).length - 1;
+}
+
+// Helper to get the position of a letter's occurrence in a word
+function getPositionOfOccurence(word, letter, occurrence) {
+  let position = -1;
+  for (let i = 0; i <= occurrence; i++) {
+    position = word.indexOf(letter, position + 1);
+    if (position === -1) break;
+  }
+  return position;
+}
+
+// Determines how many words have been guessed so far, and puts them into a new array just for guessed words.
+function getCurrentWordArr() {
+  const numberOfGuessedWords = guessedAnimal.length
+  return guessedAnimal[numberOfGuessedWords - 1] || [];
+}
+
+// message for when a word isn't a valid animal name.
+function handleInvalidWord() {
+  messageEl.style.visibility = 'visible';
+  messageEl.innerText = 'Invalid word, enter animal name';
+
+  setTimeout(() => {
+    messageEl.style.visibility = 'hidden';
+  }, 3500);
+}
+
+// sends the winner/loser message when appropriate
 function renderMessage() {
   if (winner === 1) {
     setTimeout(() => {
@@ -143,3 +217,5 @@ function renderMessage() {
     }, 800)
   }
 }
+
+init();
