@@ -115,7 +115,7 @@ function handleSubmitWord() {
     letter.classList.add('locked')
   })
 
-  flipTile(currentWord, row);
+  colorTile(currentWord, row);
   
   render();
 }
@@ -147,8 +147,8 @@ function handleInvalidWord() {
 }
 
 
-// logic for highlighting letters. referenced 
-function flipTile(guess, row) {
+// logic for highlighting letters. Got help from AI tools, mainly just error correction.
+function colorTile(guess, row) {
   row.forEach((tile, index) => {
     const letter = tile.textContent;
 
