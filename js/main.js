@@ -16,14 +16,6 @@ const letters = document.querySelectorAll('.key-row button');
 
 /*----------------------------- Event Listeners -----------------------------*/
 resetBtn.addEventListener('click', init);
-letters.forEach((letterEl) => {
-  letterEl.addEventListener('click', ({ target }) => {
-    const letter = target.getAttribute('id');
-    if (letter !== 'enter-key' && letter !== 'delete-key') {
-      updateGuessedWords(letter);
-    }
-  });
-});
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -38,6 +30,7 @@ function init() {
   nextSquare = 1;
   guessedCount = 0;
   resetBtn.style.visibility = 'hidden'
+
   render();
   renderBoard();
 }
@@ -52,8 +45,10 @@ function render() {
 function renderBoard() {
   board.forEach((div) => {
     div.style.backgroundColor = '';
+    div.style.color = '';
     div.innerText = '';
-  })
+    div.classList.remove('locked');
+  });
   
   letters.forEach((key) => {
     key.style.backgroundColor = '';
@@ -68,14 +63,16 @@ function renderKeyboard() {
     letterEl.onclick = ({ target }) => {
       const letter = target.getAttribute('id');
       
-      if(letter === 'enter-key') {
+      if (letter === 'enter-key') {
         handleSubmitWord();
         turn += 1;
         return;
-      } else if(letter === 'delete-key') {
+      } else if (letter === 'delete-key') {
         handleDelete();
         return;
-      } 
+      } else {
+        updateGuessedWords(letter);
+      }
     };
   });
 }
@@ -101,15 +98,7 @@ function handleSubmitWord() {
     loser = 1;
   }
   
-  
   let row = document.querySelectorAll('.row' + turn);
-
-  if (!row) {
-    console.error('Row is undefinded');
-    return;
-  }
-
-  console.log('Row:', row);
   
   row.forEach((letter) => {
     letter.classList.add('locked')
@@ -127,7 +116,7 @@ function handleDelete() {
   const lastletterEl = document.getElementById(nextSquare - 1);
   
   if (lastletterEl && !lastletterEl.classList.contains('locked')) {
-    let currentWordArr = getCurrentWordArr()
+    let currentWordArr = getCurrentWordArr();
     currentWordArr.pop();
 
     lastletterEl.textContent = '';
@@ -150,7 +139,7 @@ function handleInvalidWord() {
 // logic for highlighting letters. Got help from AI tools, mainly just error correction.
 function colorTile(guess, row) {
   row.forEach((tile, index) => {
-    const letter = tile.textContent;
+    const letter = guess[index];
 
     if (secretAnimal[index] === letter) {
       // Letter is in the correct place
@@ -168,8 +157,7 @@ function colorTile(guess, row) {
       tile.style.backgroundColor = "#3a3a3c";
       tile.style.color = "white";
     }
-
-  })
+  });
 }
 
 // Adds letter to square, and moves to next square.
