@@ -16,6 +16,14 @@ const letters = document.querySelectorAll('.key-row button');
 
 /*----------------------------- Event Listeners -----------------------------*/
 resetBtn.addEventListener('click', init);
+letters.forEach((letterEl) => {
+  letterEl.addEventListener('click', ({ target }) => {
+    const letter = target.getAttribute('id');
+    if (letter !== 'enter-key' && letter !== 'delete-key') {
+      updateGuessedWords(letter);
+    }
+  });
+});
 
 /*-------------------------------- Functions --------------------------------*/
 
@@ -40,18 +48,17 @@ function render() {
   renderKeyboard();
 }
 
-
 // loads the tiles for the board in, and secures the winner/loser message hidden when it shouldn't be there.
 function renderBoard() {
   board.forEach((div) => {
     div.style.backgroundColor = '';
     div.innerText = '';
   })
-    
+  
   letters.forEach((key) => {
     key.style.backgroundColor = '';
   })
-    
+  
   messageEl.style.visibility = 'hidden';
 }
 
@@ -68,10 +75,8 @@ function renderKeyboard() {
       } else if(letter === 'delete-key') {
         handleDelete();
         return;
-      } else {
-        updateGuessedWords(letter);
-      }
-    }
+      } 
+    };
   });
 }
 
@@ -86,8 +91,6 @@ function handleSubmitWord() {
   
   guessedAnimal.push([]);
   
-  guessCheck(currentWord);
-  
   if (currentWord.length !== 5) {
     return;
   } else if (currentWord === secretAnimal) {
@@ -100,22 +103,21 @@ function handleSubmitWord() {
   
   
   let row = document.querySelectorAll('.row' + turn);
+
+  if (!row) {
+    console.error('Row is undefinded');
+    return;
+  }
+
+  console.log('Row:', row);
   
   row.forEach((letter) => {
     letter.classList.add('locked')
   })
+
+  flipTile(currentWord, row);
   
   render();
-}
-
-// message for when a word isn't a valid animal name.
-function handleInvalidWord() {
-  messageEl.style.visibility = 'visible';
-  messageEl.innerText = 'Invalid word, enter animal name';
-  
-  setTimeout(() => {
-    messageEl.style.visibility = 'hidden';
-  }, 3500);
 }
 
 // delete key function
@@ -134,59 +136,41 @@ function handleDelete() {
   }
 }
 
-// logic for highlighting letters. referenced YouTube video for logic: https://www.youtube.com/watch?v=oKM2nQdQkIU
-function guessCheck(guess) {
-  const row = turn - 1;
-  const animation_duration = 500;
+// message for when a word isn't a valid animal name.
+function handleInvalidWord() {
+  messageEl.style.visibility = 'visible';
+  messageEl.innerText = 'Invalid word, enter animal name';
   
-  for (let i = 0; i < 5; i++) {
-    const box = document.getElementById(`box${row}${i}`);
-    if (!box) {
-      console.error(`Box element not found: box${row}${i}`);
-      continue;
+  setTimeout(() => {
+    messageEl.style.visibility = 'hidden';
+  }, 3500);
+}
+
+
+// logic for highlighting letters. referenced 
+function flipTile(guess, row) {
+  row.forEach((tile, index) => {
+    const letter = tile.textContent;
+
+    if (secretAnimal[index] === letter) {
+      // Letter is in the correct place
+      tile.setAttribute("data-state", "correct");
+      tile.style.backgroundColor = "#538d4e";
+      tile.style.color = "white";
+    } else if (secretAnimal.includes(letter)) {
+      // Letter is in the word but in the incorrect place
+      tile.setAttribute("data-state", "wrong-location");
+      tile.style.backgroundColor = "#b59f3b";
+      tile.style.color = "white";
+    } else {
+      // Letter is not in the word
+      tile.setAttribute("data-state", "wrong");
+      tile.style.backgroundColor = "#3a3a3c";
+      tile.style.color = "white";
     }
-  
-    const letter = box.textContent;
-    const numOfOccurrencesSecret = getNumOfOccurencesInWord(secretAnimal, letter);
-    const numOfOccurrencesGuess = getNumOfOccurencesInWord(guess, letter);
-    const letterPosition = getPositionOfOccurence(guess, letter, i);
-    
-    setTimeout(() => {
-      if (
-        numOfOccurrencesGuess > numOfOccurrencesSecret && letterPosition > numOfOccurrencesSecret
-      ) {
-        box.classList.add('empty');
-      } else {
-        if (letter === secretAnimal[i]) {
-          box.classList.add('right');
-        } else if (secretAnimal.includes(letter)) {
-          box.classList.add('wrong');
-        } else {
-          box.classList.add('empty');
-        }
-      }
-    }, ((i + 1) * animation_duration) / 2);
-    
-    box.classList.add('animated');
-    box.style.animationDelay = `${(i * animation_duration) / 2}ms`;
-  }
-}
 
-// Helper to get the number of occurrences of a letter in a word
-function getNumOfOccurencesInWord(word, letter) {
-  return word.split(letter).length - 1;
+  })
 }
-
-// Helper to get the position of a letter's occurrence in a word
-function getPositionOfOccurence(word, letter, occurrence) {
-  let position = -1;
-  for (let i = 0; i <= occurrence; i++) {
-    position = word.indexOf(letter, position + 1);
-    if (position === -1) break;
-  }
-  return position;
-}
-
 
 // Adds letter to square, and moves to next square.
 function updateGuessedWords(letter) {
@@ -204,14 +188,11 @@ function updateGuessedWords(letter) {
   }
 }
 
-
-
 // Determines how many words have been guessed so far, and puts them into a new array just for guessed words.
 function getCurrentWordArr() {
   const numberOfGuessedWords = guessedAnimal.length
   return guessedAnimal[numberOfGuessedWords - 1] || [];
 }
-
 
 // sends the winner/loser message when appropriate
 function renderMessage() {

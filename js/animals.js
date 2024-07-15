@@ -18,6 +18,7 @@ export const animals = [
   'egret',
   'finch',
   'frogs',
+  'foxes',
   'gecko',
   'goose',
   'goats',
