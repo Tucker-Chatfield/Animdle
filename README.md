@@ -43,8 +43,8 @@ Animdle is an engaging and fun animal guessing game inspired by Wordle. The game
 
   |   Description | Screenshot | 
   |:-------------:| -----------|
-  |**Starting Screen**| <img src="https://imgur.com/a/8oQSDK2" width="700">
-  |**Winner Screen**| <img src="https://imgur.com/a/xxYOsZk" width="700">
+  |**Starting Screen**| <img src="Screenshot 2024-07-16 133523.png">
+  |**Winner Screen**| <img src="Screenshot 2024-07-16 133701.png">
 
   ## :computer: Technologies Used
 
@@ -59,9 +59,9 @@ Animdle is an engaging and fun animal guessing game inspired by Wordle. The game
 
 <details open>
   <summary> How to Play </summary>
-1. Start the Game: Click the "Start Game" button to begin. A secret animal name will be randomly selected.
-2. Make a Guess: Use either the on-screen keyboard or your physical keyboard to enter a 5-letter animal name.
-3. Submit Your Guess: Press the "Enter" key or click the "Enter" button to submit your guess.
+1. Make a Guess: Use either the on-screen keyboard or your physical keyboard to enter a 5-letter animal name.
+2. Submit Your Guess: Press the "Enter" key or click the "Enter" button to submit your guess.
+3. To start a new game, click the "New Game" button when prompted.
 </details>
 
 <details>
