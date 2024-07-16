@@ -43,8 +43,8 @@ Animdle is an engaging and fun animal guessing game inspired by Wordle. The game
 
   |   Description | Screenshot | 
   |:-------------:| -----------|
-  |**Starting Screen**| <img src="Screenshot 2024-07-16 133523.png">
-  |**Winner Screen**| <img src="Screenshot 2024-07-16 133701.png">
+  |**Starting Screen**| <img src="https://imgur.com/a/8oQSDK2">
+  |**Winner Screen**| <img src="https://imgur.com/a/xxYOsZk">
 
   ## :computer: Technologies Used
 
