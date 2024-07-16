@@ -1,3 +1,9 @@
+<div id="header" align="center">
+
+  <img src="https://imgur.com/a/y3sq9no" width="800" height="400">
+
+</div>
+
 # <Animdle>
 Guessing word game similar to popular game "Wordle", where you try to guess which type of animal. There will be hints as you progress, unless of course you answer it on your first guess. I decided to put this together because I have been a big Wordle fan since the beginning, and I decided it would be fun to combine another one of my interests, which is wildlife. If no one likes or plays this, I likely still will play it on my own just out of pure enjoyment of my personal interests.
 

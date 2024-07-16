@@ -16,7 +16,7 @@ const letters = document.querySelectorAll('.key-row button');
 
 /*----------------------------- Event Listeners -----------------------------*/
 resetBtn.addEventListener('click', init);
-
+document.addEventListener('keydown', handleKeyPress); // used this link for reference https://stackoverflow.com/questions/38502560/whats-the-difference-between-keyup-keydown-keypress-and-input-events
 /*-------------------------------- Functions --------------------------------*/
 
 // initializes the game
@@ -77,6 +77,18 @@ function renderKeyboard() {
   });
 }
 
+function handleKeyPress(event) {
+  const key = event.key.toUpperCase();
+
+  if (key === 'ENTER') {
+    handleSubmitWord();
+  } else if (key === 'BACKSPACE') {
+    handleDelete();
+  } else if (/^[A-Z]$/.test(key)) {
+    updateGuessedWords(key);
+  }
+}
+
 // Handles the submission, checks for valid word, checks word length, if correct winner, if wrong next row, pushes word into row, and moves to next row.
 function handleSubmitWord() {
   const currentWord = getCurrentWordArr().join('');
@@ -86,6 +98,7 @@ function handleSubmitWord() {
     return;
   }
   
+  
   guessedAnimal.push([]);
   
   if (currentWord.length !== 5) {
@@ -93,8 +106,8 @@ function handleSubmitWord() {
   } else if (currentWord === secretAnimal) {
     winner = 1;
   }
-  
-  if (guessedAnimal.length === 6 && !winner) {
+    
+  if (guessedAnimal.length === 7 && !winner) {
     loser = 1;
   }
   
@@ -103,9 +116,11 @@ function handleSubmitWord() {
   row.forEach((letter) => {
     letter.classList.add('locked')
   })
-
-  colorTile(currentWord, row);
   
+  colorTile(currentWord, row);
+
+  turn += 1;
+  nextSquare = (turn - 1) * 5 + 1;
   render();
 }
 
@@ -118,9 +133,9 @@ function handleDelete() {
   if (lastletterEl && !lastletterEl.classList.contains('locked')) {
     let currentWordArr = getCurrentWordArr();
     currentWordArr.pop();
-
+    
     lastletterEl.textContent = '';
-
+    
     nextSquare -= 1;
   }
 }
@@ -135,12 +150,33 @@ function handleInvalidWord() {
   }, 3500);
 }
 
+// Adds letter to square, and moves to next square.
+function updateGuessedWords(letter) {
+  const currentWordArr = getCurrentWordArr();
+  
+  if (currentWordArr && currentWordArr.length < 5) {
+    currentWordArr.push(letter);
+    
+    const nextSquareEl = document.getElementById(nextSquare.toString());
+    
+    if (nextSquareEl) { 
+      nextSquareEl.textContent = letter.toUpperCase();
+      nextSquare = nextSquare + 1;
+    }
+  }
+}
+
+// Determines how many words have been guessed so far, and puts them into a new array just for guessed words.
+function getCurrentWordArr() {
+  const numberOfGuessedWords = guessedAnimal.length
+  return guessedAnimal[numberOfGuessedWords - 1] || [];
+}
 
 // logic for highlighting letters. Got help from AI tools, mainly just error correction.
 function colorTile(guess, row) {
   row.forEach((tile, index) => {
     const letter = guess[index];
-
+    
     if (secretAnimal[index] === letter) {
       // Letter is in the correct place
       tile.setAttribute("data-state", "correct");
@@ -158,28 +194,6 @@ function colorTile(guess, row) {
       tile.style.color = "white";
     }
   });
-}
-
-// Adds letter to square, and moves to next square.
-function updateGuessedWords(letter) {
-  const currentWordArr = getCurrentWordArr()
-  
-  if (currentWordArr && currentWordArr.length < 5) {
-    currentWordArr.push(letter);
-    
-    const nextSquareEl = document.getElementById(nextSquare);
-    
-    if(nextSquareEl) { 
-      nextSquareEl.textContent = letter;
-      nextSquare = nextSquare + 1;
-    }
-  }
-}
-
-// Determines how many words have been guessed so far, and puts them into a new array just for guessed words.
-function getCurrentWordArr() {
-  const numberOfGuessedWords = guessedAnimal.length
-  return guessedAnimal[numberOfGuessedWords - 1] || [];
 }
 
 // sends the winner/loser message when appropriate
