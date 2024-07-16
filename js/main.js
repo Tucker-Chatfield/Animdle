@@ -215,13 +215,13 @@ function renderMessage() {
       messageEl.style.visibility = 'visible';
       messageEl.innerText = 'You got it!';
       resetBtn.style.visibility = 'visible';
-    }, 800)
+    }, 2000)
   } else if (loser === 1) {
     setTimeout(() => {
       messageEl.style.visibility = 'visible';
       messageEl.innerText = `Nice try! The word was ${secretAnimal}`;
       resetBtn.style.visibility = 'visible';
-    }, 800)
+    }, 2000)
   }
 }
 

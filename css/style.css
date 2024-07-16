@@ -26,9 +26,7 @@ h1 {
   width: 100%;
   flex-direction: column;
   align-items: center;
-  padding: 3vmin;
-  width: 100%;
-  height: calc(100vh - 95px);
+  padding: 0vmin;
 }
 
 .title {
@@ -49,8 +47,8 @@ h1 {
 
 #board {
   display: grid;
-  grid-template-columns: repeat(5, 9vmin);
-  grid-template-rows: repeat(6, 9vmin);
+  grid-template-columns: repeat(5, 7vmin);
+  grid-template-rows: repeat(6, 7vmin);
   gap: 1vmin;
   margin-top: 0;
   margin-bottom: 0;
@@ -72,7 +70,6 @@ h1 {
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  margin: auto;
   gap: .5vmin;
 }
 
@@ -80,20 +77,14 @@ h1 {
   display: flex;
 }
 
-.key-row1 {
-  margin: 0.5vmin;
-}
-
-.key-row2 {
-  margin: 0.5vmin;
-}
-
+.key-row1,
+.key-row2,
 .key-row3 {
   margin: 0.5vmin;
 }
 
 button, #enter-key, #delete-key {
-  font-size: 20px;
+  font-size: 3vmin;
   font-weight: 100;
   margin: 0 0.5vmin;
   padding: 1vmin;
@@ -103,13 +94,11 @@ button, #enter-key, #delete-key {
   padding-block: 1px;
   padding-inline: 6px;
   border-radius: 4px;
-  height: 58px;
-  width: 40px;
 }
 
 #enter-key, #delete-key {
-  width: 65px;
-  font-size: 15px;
+  width: 10vmin;
+  font-size: 2.5vmin;
 }
 
 button:hover, #enter-key:hover, #delete-key:hover {
@@ -157,4 +146,97 @@ button:hover, #enter-key:hover, #delete-key:hover {
 
 .flip {
   animation: flip 0.6s ease-in-out;
+}
+
+@media (max-width: 600px) {
+  .title {
+    font-size: 10vw;
+  }
+
+  .message {
+    font-size: 5vw;
+  }
+
+  #board {
+    grid-template-columns: repeat(5, 15vw);
+    grid-template-rows: repeat(6, 15vw);
+    gap: 2vw;
+  }
+
+  #board > div {
+    font-size: 7vw;
+  }
+
+  button, #enter-key, #delete-key {
+    font-size: 5vw;
+    height: 10vw;
+    width: 8vw;
+  }
+
+  #enter-key, #delete-key {
+    width: 15vw;
+    font-size: 3vw;
+  }
+}
+
+@media (min-width: 601px) and (max-width: 1200px) {
+  .title {
+    font-size: 8vw;
+  }
+
+  .message {
+    font-size: 4vw;
+  }
+
+  #board {
+    grid-template-columns: repeat(5, 12vw);
+    grid-template-rows: repeat(6, 12vw);
+    gap: 1.5vw;
+  }
+
+  #board > div {
+    font-size: 6vw;
+  }
+
+  button, #enter-key, #delete-key {
+    font-size: 4vw;
+    height: 8vw;
+    width: 6vw;
+  }
+
+  #enter-key, #delete-key {
+    width: 12vw;
+    font-size: 2.5vw;
+  }
+}
+
+@media (min-width: 1201px) {
+  .title {
+    font-size: 7vmin;
+  }
+
+  .message {
+    font-size: 3vmin;
+  }
+
+  #board {
+    grid-template-columns: repeat(5, 9vmin);
+    grid-template-rows: repeat(6, 9vmin);
+    gap: 1vmin;
+  }
+
+  #board > div {
+    font-size: 5vmin;
+  }
+
+  button, #enter-key, #delete-key {
+    font-size: 3vmin;
+    height: 8vmin;
+    width: 6vmin;
+  }
+
+  #enter-key, #delete-key {
+    width: 10vmin;
+    font-size: 2.5vmin;
+  }
 }
