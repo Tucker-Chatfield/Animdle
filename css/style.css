@@ -8,6 +8,7 @@ body, html {
   height: 100%;
   font-family: Arial, Helvetica, sans-serif;
   background: rgb(242, 228, 204);
+  overflow: hidden;
 }
 
 h1 {
@@ -61,7 +62,7 @@ h1 {
   justify-content: center;
   align-items: center;
   border: 0.1vmin solid gray;
-  font-size: 50px;
+  font-size: 5vmin;
   color: rgb(240, 78, 37);
   font-weight: bold;
 }
@@ -140,4 +141,20 @@ button:hover, #enter-key:hover, #delete-key:hover {
   justify-content: center;
   align-items: center;
   height: 20px;
+}
+
+@keyframes flip {
+  0% {
+    transform: scaleY(1);
+  }
+  50% {
+    transform: scaleY(0);
+  }
+  100% {
+    transform: scaleY(1);
+  }
+}
+
+.flip {
+  animation: flip 0.6s ease-in-out;
 }

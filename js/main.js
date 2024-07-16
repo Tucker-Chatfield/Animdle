@@ -172,31 +172,43 @@ function getCurrentWordArr() {
   return guessedAnimal[numberOfGuessedWords - 1] || [];
 }
 
-// logic for highlighting letters. Got help from AI tools, mainly just error correction.
+// logic for highlighting and flipping letters. Got help from AI tools, mainly just error correction. also referenced this YT video for the animations: https://youtube.com/shorts/TPzVxaqvNMg?si=xoJRAWqSQSpp81tx
 function colorTile(guess, row) {
   row.forEach((tile, index) => {
     const letter = guess[index];
-    
-    if (secretAnimal[index] === letter) {
-      // Letter is in the correct place
-      tile.setAttribute("data-state", "correct");
-      tile.style.backgroundColor = "#538d4e";
-      tile.style.color = "white";
-    } else if (secretAnimal.includes(letter)) {
-      // Letter is in the word but in the incorrect place
-      tile.setAttribute("data-state", "wrong-location");
-      tile.style.backgroundColor = "#b59f3b";
-      tile.style.color = "white";
-    } else {
-      // Letter is not in the word
-      tile.setAttribute("data-state", "wrong");
-      tile.style.backgroundColor = "#3a3a3c";
-      tile.style.color = "white";
-    }
+
+    const delay = index * 300; // 300ms delay between tile flip
+
+    // Adds the flip animation class with delay
+    setTimeout(() => {
+      tile.classList.add('flip');
+
+      tile.addEventListener('animationend', () => {
+        tile.classList.remove('flip');
+        
+        if (secretAnimal[index] === letter) {
+          // Letter is in the correct place
+          tile.setAttribute("data-state", "correct");
+          tile.style.backgroundColor = "#538d4e";
+          tile.style.color = "white";
+        } else if (secretAnimal.includes(letter)) {
+          // Letter is in the word but in the incorrect place
+          tile.setAttribute("data-state", "wrong-location");
+          tile.style.backgroundColor = "#b59f3b";
+          tile.style.color = "white";
+        } else {
+          // Letter is not in the word
+          tile.setAttribute("data-state", "wrong");
+          tile.style.backgroundColor = "#3a3a3c";
+          tile.style.color = "white";
+        }
+      }, {once: true});
+
+    }, delay);
   });
 }
-
-// sends the winner/loser message when appropriate
+    
+    // sends the winner/loser message when appropriate
 function renderMessage() {
   if (winner === 1) {
     setTimeout(() => {
