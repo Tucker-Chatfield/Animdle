@@ -73,7 +73,6 @@ function renderKeyboard() {
         return;
       } else {
         updateGuessedWords(letter);
-        greyOutLetter(letter);
       }
     };
   });
@@ -106,7 +105,6 @@ function handleSubmitWord() {
     handleInvalidWord();
     return;
   }
-  
   
   guessedAnimal.push([]);
   
