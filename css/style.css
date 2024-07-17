@@ -148,6 +148,11 @@ button:hover, #enter-key:hover, #delete-key:hover {
   animation: flip 0.6s ease-in-out;
 }
 
+.used {
+  background-color: grey !important;
+  color: white !important;
+}
+
 @media (max-width: 600px) {
   .title {
     font-size: 10vw;

@@ -52,6 +52,7 @@ function renderBoard() {
   
   letters.forEach((key) => {
     key.style.backgroundColor = '';
+    key.classList.remove('used');
   })
   
   messageEl.style.visibility = 'hidden';
@@ -72,9 +73,17 @@ function renderKeyboard() {
         return;
       } else {
         updateGuessedWords(letter);
+        greyOutLetter(letter);
       }
     };
   });
+}
+
+function greyOutLetter(letter) {
+  const letterButton = document.getElementById(letter);
+  if (letterButton) {
+    letterButton.classList.add('used');
+  }
 }
 
 function handleKeyPress(event) {
@@ -202,13 +211,16 @@ function colorTile(guess, row) {
           tile.style.backgroundColor = "#3a3a3c";
           tile.style.color = "white";
         }
+
+        greyOutLetter(letter);
+
       }, {once: true});
 
     }, delay);
   });
 }
     
-    // sends the winner/loser message when appropriate
+// sends the winner/loser message when appropriate
 function renderMessage() {
   if (winner === 1) {
     setTimeout(() => {
