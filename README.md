@@ -1,13 +1,13 @@
 <div id="header" align="center">
 
-  <img src="https://imgur.com/a/y3sq9no" width="800" height="400">
+  <img src="https://imgur.com/vEtRmFP.jpg" width="800" height="400">
 </div>
 
 <div id="description" align="center">
 
 # Animdle
 
-### [DEMO FILLER](https://github.com/tucker-chatfield)
+### [TRY IT OUT](https://tucker-chatfield.github.io/Animdle/)
 
 ##### Tucker Chatfield
 
@@ -43,8 +43,8 @@ Animdle is an engaging and fun animal guessing game inspired by Wordle. The game
 
   |   Description | Screenshot | 
   |:-------------:| -----------|
-  |**Starting Screen**| ![Imgur Image](https://imgur.com/a/8oQSDK2.jpg)
-  |**Winner Screen**| ![Imgur Image](https://imgur.com/a/xxYOsZk.jpg)
+  |**Starting Screen**| ![Imgur Image](https://imgur.com/ru55oc6.jpg)
+  |**Winner Screen**| ![Imgur Image](https://imgur.com/ubOX8Rf.jpg)
 
   ## :computer: Technologies Used
 
@@ -64,24 +64,13 @@ Animdle is an engaging and fun animal guessing game inspired by Wordle. The game
 3. To start a new game, click the "New Game" button when prompted.
 </details>
 
-<details>
-  <summary> How to Interact With Others' Posts </summary>
-    1. Posts may be "liked" or "disliked" by clicking on the thumbs up or down button on their card.
-    2. To reveal the author of a post, hover over the `Who could it possibly be?` button.
-    3. To see more posts by the same user, click on the revealed username and profile picture.
-</details>
-
 <details open>
-  <summary> Deployed Link (Heroku) </summary>
-  <a href="https://github.com/tucker-chatfield"
-    > https://github.com/tucker-chatfield </a
+  <summary> Deployed Link </summary>
+  <a href="https://tucker-chatfield.github.io/Animdle/"
+    > tucker-chatfield.github.io/Animdle/ </a
   >
 </details>
 
 ## :satellite: Upcoming Features
 
-- [:star:] Animations on sliding buttons
-
-- [:x:] Comment functionality on posts to encourage discussion
-
-- [:x:] ~~Tinder API Integration~~
+- Attribute hints instead of letter hints (habitat, color, animal type)
