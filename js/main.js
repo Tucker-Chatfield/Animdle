@@ -139,7 +139,7 @@ function disableEnterKey() {
 
   setTimeout(() => {
     enterKey.disabled = false;
-  }, 2000);
+  }, 3000);
 }
 
 // delete key function
