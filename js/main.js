@@ -66,7 +66,6 @@ function renderKeyboard() {
       
       if (letter === 'enter-key') {
         handleSubmitWord();
-        turn += 1;
         return;
       } else if (letter === 'delete-key') {
         handleDelete();
@@ -128,7 +127,19 @@ function handleSubmitWord() {
 
   turn += 1;
   nextSquare = (turn - 1) * 5 + 1;
+
+  disableEnterKey();
+
   render();
+}
+
+function disableEnterKey() {
+  const enterKey = document.getElementById('enter-key');
+  enterKey.disabled = true;
+
+  setTimeout(() => {
+    enterKey.disabled = false;
+  }, 2000);
 }
 
 // delete key function

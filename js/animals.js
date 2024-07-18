@@ -9,6 +9,7 @@ export const animals = [
   'boars',
   'bulls',
   'camel',
+  'chick',
   'chimp',
   'cobra',
   'crane',
