@@ -1,6 +1,6 @@
 <div id="header" align="center">
 
-  <img src="https://imgur.com/vEtRmFP.jpg" width="800" height="200">
+  <img src="https://imgur.com/vEtRmFP.jpg" width="800" height="100">
 </div>
 
 <div id="description" align="center">
@@ -11,7 +11,7 @@
 
 ##### Tucker Chatfield
 
-[![LinkedIn Badge]()]()
+[![LinkedIn Badge](Tucker Chatfield)](www.linkedin.com/in/tucker-chatfield-9b6035ab)
 
 ## :pencil: Description
 
