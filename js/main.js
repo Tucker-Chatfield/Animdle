@@ -22,7 +22,6 @@ document.addEventListener('keydown', handleKeyPress); // used this link for refe
 // initializes the game
 function init() {
   secretAnimal = animals[Math.floor(Math.random() * animals.length)].toUpperCase();
-  console.log(secretAnimal);
   winner = 0;
   loser = 0;
   guessedAnimal = [[]];
