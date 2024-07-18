@@ -11,7 +11,7 @@
 
 ##### Tucker Chatfield
 
-[![LinkedIn Badge](Tucker Chatfield)](www.linkedin.com/in/tucker-chatfield-9b6035ab)
+[![LinkedIn Badge](https://img.shields.io/badge/linkedin-%230077B5.svg?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/tucker-chatfield-9b6035ab)
 
 ## :pencil: Description
 
